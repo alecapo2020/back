@@ -1,0 +1,39 @@
+.imagen{
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.form-control{
+    margin-top:15px;
+    color:#4CB4FF !important;
+    border-radius: 10px;
+    box-shadow: 0px 3px 6px rgba(161, 157, 157, 0.184);
+    border: none;
+}
+.form-control::placeholder {
+    color: #a7d4f7;
+    font-size: 1.2em;
+    font-weight: 600;
+  }
+
+  .box{
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      color:#2f2f2f;
+      height: 100%;
+  }
+
+  .sele{
+    color:#2da0f1d0 !important;
+    font-style: normal;
+    font-size: 1.2rem;
+  }
+
+  .dat{
+      height: 100px !important;
+  }
+
+  .box .inputs{
+      margin-top: 80px;
+  }

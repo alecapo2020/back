@@ -1,7 +1,19 @@
 import logo from './logo.svg';
 import './App.css';
+import { useHistory } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { Store } from './store/store';
 
 function App() {
+
+  const history = useHistory();
+  const [data, SetData] = useContext(Store)
+  
+  if(localStorage.getItem('logged') === 'false' || data.logged !== true){
+    console.log('error de autenticacion')
+    history.replace('/login')
+  }
+
   return (
     <div className="App">
       <header className="App-header">

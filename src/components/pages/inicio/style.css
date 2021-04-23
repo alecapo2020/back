@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body{
+    /* background-image: url("/img/fondo.png"); The image used */
+    background-color: #cccccc; /* Used if the image is unavailable */
+    height: 100vh; /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat: repeat-y;
+    background-size: cover; /* Resize the background image to cover the entire container */
+    font-family: 'Inter', sans-serif;
+}
+
+a{
+    text-decoration: none !important;
+    font-style: none !important;
+    color:#2f2f2f !important;
+}
+
+:root {
+    --a: #F9EC35;
+    --b: #F5C244;
+    --unnamed-color-00416c: #00416C;
+    --unnamed-color-ffffff: #FFFFFF;
+    --s: #0071BC;
+    --w: #F90013;
+    --q: #53AADD;
+    --AzulFondo: #008AE5;
+    --warning:#FFC107;
+    --moradoFondo:#7628A7;
+    --rojoFondo: #A73C28;
+    --verdeFondo: #28A745;
+    --fucsiaFondo: #CC34B5;
+    --amarilloFondo: #FFC107;
+}
+
+
+.caja{
+    background: var(--warning);
+    padding-top:25px;
+    padding-bottom:30px;
+    padding-left: 50px;
+    padding-right: 50px;
+    box-shadow: 0px 3px 8px #00000029;
+    border-radius: 20px;
+    width: 100%;
+    margin-top: 40px;
+}
+
+.boton{
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 25px;
+    background:white;
+    padding-left:42px;
+    padding-right:42px;
+    padding-top:20px;
+    padding-bottom:12px;
+    width: 139px;
+    text-align: center;
+}
+
+
+.boton:hover, .iconoBox:hover{
+    background:red;
+    color:white
+}
+
+.boton h3{
+    font-size: 1rem;
+}
+
+.iconoBox{
+    background:var(--warning);
+    border-radius: 50%;
+    padding: 5px;
+    text-align: center;
+    width: 53px;
+    height: 53px;   
+}
+
+.fas{
+   color:white;
+   font-size: 30px;
+   padding-top:5px;
+}
+
+.textoBoton{
+    font-weight: 300;
+}
+
+.titulo{
+    color:white;
+    font-weight: 300;
+    padding-bottom:20px;
+}

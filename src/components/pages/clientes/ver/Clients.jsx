@@ -1,30 +1,26 @@
-import React, {useContext, useEffect,useState} from 'react'
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import React,{useContext, useEffect,useState} from 'react';
+import './style.css'
+import {Link, useHistory} from 'react-router-dom'
 import { Store } from '../../../../store/store';
 
-
-
-const ViewQuotation = () => {
-
+const Clients = () => {
     const { REACT_APP_SERVIDOR } = process.env;
-    const [data, setData] = useState([]);
-    const [cotizaciones, setCotizaciones] = useState([]);
+    const [clientes, setClientes] = useState([]);
     const [clientesCount, setClientesCount] = useState(0);
     const [page, setPage] = useState(0);
     const [quantiyOfResults, setQuantiyOfResults] = useState(20)
    
     const history = useHistory();
-    const [data1, SetData1] = useContext(Store)
+    const [data, SetData] = useContext(Store)
     
-    if(localStorage.getItem('logged') === 'false' || data1.logged !== true){
+    if(localStorage.getItem('logged') === 'false' || data.logged !== true){
       console.log('error de autenticacion')
       history.replace('/login')
     }
 
-
     function getProductsFromDB (){
-            axios.get(REACT_APP_SERVIDOR+'/api/cotizaciones',{
+            axios.get(REACT_APP_SERVIDOR+'/api/clientes',{
                 headers:{
                     token:'JaRvIs92!',
                     correo:'alecapo@gmail.com',
@@ -32,47 +28,18 @@ const ViewQuotation = () => {
                 }
             })
             .then((data)=>{
-                setData(data.data.cotizaciones);
-                setClientesCount(data.data.cotizaciones.length)
-                setCotizaciones(data.data.cotizaciones)
+                setClientes(data.data.clientes);
+                setClientesCount(data.data.clientes.length)
             })       
             .catch(e=>console.log(e))       
     }
      
-
+    
     useEffect(() => {
        getProductsFromDB();
     }, [])
 
     
-
-  
-    
-    function borrar(i){
-        console.log(`${REACT_APP_SERVIDOR}/api/cotizaciones/${i}`)
-        axios.delete(`${REACT_APP_SERVIDOR}/api/cotizaciones/${i}`, {
-            headers:{
-                token:'JaRvIs92!',
-                correo:'alecapo@gmail.com',
-                password:'123456'
-            },
-            data:{
-                id:i
-            }
-        })
-        .then(e=>console.log(e.data.msg) )
-        .catch(e=>console.log(e))
-    }
-
-    function searchInput (e){
-        const searchValue = e.target.value
-
-        const resultado = cotizaciones.filter((data) => {
-            return data.empresa.includes(searchValue);
-        });
-        searchValue === '' ? setCotizaciones(data) :  setCotizaciones(resultado)
-    }
-
     //paginationt
     function limit1 (){
         const selector = document.getElementById('limit').value;
@@ -85,7 +52,7 @@ const ViewQuotation = () => {
     let startRow = 0;
     currentPage > 0 ? startRow = currentPage * quantiyOfResults : startRow = 0
     const newPage  = startRow + quantiyOfResults;
-    let paginated = cotizaciones.slice(startRow,newPage)
+    let paginated = clientes.slice(startRow,newPage)
     // butons Pagination
     const contadorBotones = clientesCount / quantiyOfResults
     const items = [];
@@ -100,11 +67,34 @@ const ViewQuotation = () => {
     filtro = items
     :
     filtro = items.slice(0,10)
+    
+    function borrar(i){
+        const URL = "http://127.0.0.1:8000/api/clientes/delete"
+        axios.delete(URL, {params: {
+            idCliente: i
+          }})
+        .then(e=>alert(e.data) )
+        .catch(e=>console.log(e))
+    }
+
+    function searchInput (e){
+        const searchValue = e.target.value
+
+       
+        
+        const resultado = clientes.filter((data) => {
+            return data.empresa.includes(searchValue);
+        });
+        
+        searchValue === '' ? setClientes(clientes) :  setClientes(resultado)
+
+
+    }
 
 
     return (
         <div className="container py-5">
-            <h1>VER COTIZACIONES</h1>
+            <h1>VER CLIENTES</h1>
             <div className="bgSearchSection p-3 d-flex justify-content-center">
                 <input className="searchInput" type="text" name="searchInput" id="searchInput" placeholder="Ingresa valor a buscar.." onChange={(e)=>searchInput(e)}/>
                 <button className="btnSearchField">Buscar</button>
@@ -137,30 +127,35 @@ const ViewQuotation = () => {
                         </tr>
                     </thead>
                     <tbody>
-                            {
-                            paginated.map((i,index)=>
-                            <tr key={index}>
-                                   <td>{ i.id }</td>
-                                   <td>{ i.Cliente.empresa }</td>
-                                   <td>{ i.Cliente.telefono }</td>
-                                   <td>{ i.Cliente.celular }</td>
-                                   <td>{ i.Cliente.correo }</td>
-                                   <td><a href={`/cotizaciones/pdf/${i.id}`}> <i className="fas fa-search"></i></a></td>
-                                   <td><i className="fas fa-trash" onClick={()=>{borrar(i.id)}}></i></td>
-                           </tr>
-                         )}
+                            {paginated.map((i,index)=>
+                               <tr key={index}>
+                                      <td>{ i.id }</td>
+                                      <td>{ i.empresa }</td>
+                                      <td>{ i.telefono }</td>
+                                      <td>{ i.celular }</td>
+                                      <td>{ i.correo }</td>
+                                      <td><a href={`/clientes/envioPDF/${i.id}`}><i className="far fa-file-pdf" style={{color:"#218838",fontSize:'20px',padding:'7px'}}></i></a></td>
+                                      <td><i className="fas fa-trash" onClick={()=>{borrar(i.id)}} style={{color:"#E53129",fontSize:'20px',padding:'7px',cursor:'pointer'}}></i></td>
+                                      <td><Link to={`/clientes/editar/${i.id}`}><i className="fas fa-pen" style={{color:"#F5C244",fontSize:'20px',padding:'7px',cursor:'pointer'}}></i></Link></td>
+                              
+                              
+                              </tr>
+                                
+                            
+                            
+                            )}
                     </tbody>
                     <tfoot>
                         <tr>
                             <td className="" colSpan="6">
-                                <div className="d-inline countTableAction"> Mostrando  registros</div>
+                                <div className="d-inline countTableAction"> Mostrando {startRow} a {newPage} de {clientesCount} registros</div>
                                 <div className="tableActions float-end">
                                     <button className="btn btn-primary" onClick={()=>{setPage(page-1)}}>Anterior</button>
 
                                     {filtro.map((i)=>
                                             <button className="buttonTableAction" onClick={()=>setPage(i)} key={i}>{i}</button>
                                     )}
-
+                                   
                                     <button className="btn btn-primary" onClick={()=>{setPage(page+1)}}>Siguiente</button>
                                 </div>
                             </td>
@@ -169,8 +164,11 @@ const ViewQuotation = () => {
                 </table>
             </div>
            
+
+
+
         </div>
     )
 }
 
-export default ViewQuotation
+export default Clients
