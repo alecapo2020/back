@@ -7,13 +7,13 @@ import { Store } from '../../../../store/store';
 
 const EnvioPDF = () => {
 
-  const history = useHistory();
-    const [data, SetData] = useContext(Store)
+  // const history = useHistory();
+  //   const [data, SetData] = useContext(Store)
     
-    if(localStorage.getItem('logged') === 'false' || data.logged !== true){
-      console.log('error de autenticacion')
-      history.replace('/login')
-    }
+  //   if(localStorage.getItem('logged') === 'false' || data.logged !== true){
+  //     console.log('error de autenticacion')
+  //     history.replace('/login')
+  //   }
 
   const [cliente, setCliente] = useState([])
   const urlParam = useParams()
