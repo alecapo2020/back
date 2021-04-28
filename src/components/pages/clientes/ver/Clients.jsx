@@ -69,8 +69,15 @@ const Clients = () => {
     filtro = items.slice(0,10)
     
     function borrar(i){
-        const URL = "http://127.0.0.1:8000/api/clientes/delete"
-        axios.delete(URL, {params: {
+        const id = i
+        const URL = `${REACT_APP_SERVIDOR}/api/clientes/${id}`
+        axios.delete(URL, {
+            headers:{
+                token:'JaRvIs92!',
+                correo:'alecapo@gmail.com',
+                password:'123456'
+            }
+        }, {params: {
             idCliente: i
           }})
         .then(e=>alert(e.data) )

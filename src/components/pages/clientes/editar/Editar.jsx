@@ -10,6 +10,7 @@ const Editar = () => {
     const history = useHistory();
     const [data, SetData] = useContext(Store)
     
+
     if(localStorage.getItem('logged') === 'false' || data.logged !== true){
       console.log('error de autenticacion')
       history.replace('/login')
@@ -18,20 +19,50 @@ const Editar = () => {
     const [cliente, setCliente] = useState([])
     const url = useParams()
 
-    const getCliente = () => {
-        const db = 'http://127.0.0.1:8000/api/clientes' 
-        axios.get(db)
-        .then(e=>setCliente(e.data.filter((i)=>i.idCliente === parseInt(url.idCliente))))
+    const getCliente = async (id) => {
+        
+        const db = `http://www.manillasapi.com/api/clientes/${id.idCliente}`
+       await axios.get(db,{headers:{
+        token:'JaRvIs92!',
+        correo:'alecapo@gmail.com',
+        password:'123456'
+        }})
+        .then(e=>setCliente(e.data))
         .catch(e=>console.log(e))
     }
 
-    const formHandler = (e) =>{
-        // e.preventDefault()
-        console.log(e)
+    const submitHandler = (e) =>{
+        e.preventDefault()
+        const form = e.target
+        const dat = {
+            empresa:   form.elements['empresa'].value,
+            nit:       form.elements['nit'].value,
+            contacto:  form.elements['contacto'].value,
+            celular:   form.elements['celular'].value,
+            correo:    form.elements['correo'].value,
+            telefono:  form.elements['telefono'].value,
+            direccion: form.elements['direccion'].value,
+            ciudad:    form.elements['ciudad'].value,
+            segmento:  form.elements['segmento'].value,
+            esCliente: form.elements['esCliente'].value,
+        }
+        const id = url.idCliente
+        
+        axios.put(`http://www.manillasapi.com/api/clientes/${id}`,dat,{
+            headers:{
+                token:'JaRvIs92!',
+                correo:'alecapo@gmail.com',
+                password:'123456'
+            }
+        }).then(e=>{
+            alert(e.data.msg)
+            history.replace('/clientes/ver')
+        })
+        .catch(e=>console.log(e))
     }
 
     useEffect(() => {
-        getCliente();
+        getCliente(url);
     }, [])
 
 
@@ -39,43 +70,55 @@ const Editar = () => {
     return (
         <div className="container text-white py-5">
            <h1>EDITAR CLIENTES</h1>
+               <form method="post" onSubmit={submitHandler}>
            <div className="row">
                <div className="col-md-6">
-               <form action={'http://127.0.0.1:8000/api/clientes/editar/'+url.idCliente} method="post">
-                    {
-                        cliente !== [] 
-                        ?
-                        cliente.map((i,index)=>
-                        <div key={index}>
-                            <input type="text" name="imagen" id="imagen" placeholder="imagen" className="form-control" defaultValue={i.imagen}/>
-                            <input type="text" name="empresa" id="empresa" placeholder="Empresa" className="form-control" defaultValue={i.empresa}/>
-                            <input type="text" name="nit" id="nit" placeholder="nit" className="form-control" defaultValue={i.nit}/>
-                            <input type="text" name="dv" id="dv" placeholder="dv" className="form-control" defaultValue={i.dv}/>
-                            <input type="text" name="telefono" id="telefono" placeholder="telefono" className="form-control" defaultValue={i.telefono}/>
-                            <input type="text" name="ciudad" id="ciudad" placeholder="ciudad" className="form-control" defaultValue={i.ciudad}/>
-                            <input type="text" name="direccion" id="direccion" placeholder="direccion" className="form-control" defaultValue={i.direccion}/>
-                            <input type="text" name="contacto" id="contacto" placeholder="contacto" className="form-control" defaultValue={i.contacto}/>
-                            <input type="text" name="cargo" id="cargo" placeholder="cargo" className="form-control" defaultValue={i.cargo}/>
-                            <input type="text" name="celular" id="celular" placeholder="celular" className="form-control" defaultValue={i.celular}/>
-                            <input type="text" name="correo" id="correo" placeholder="correo" className="form-control" defaultValue={i.correo}/>
-                            <input type="text" name="correoFactura" id="correoFactura" placeholder="correoFactura" className="form-control" defaultValue={i.correoFactura}/>
-                            <input type="text" name="regimen" id="regimen" placeholder="regimen" className="form-control" defaultValue={i.regimen}/>
-                            <input type="text" name="responsabilidad" id="responsabilidad" placeholder="responsabilidad" className="form-control" defaultValue={i.responsabilidad}/>
-                            <input type="text" name="datosEnvio" id="datosEnvio" placeholder="datosEnvio" className="form-control" defaultValue={i.datosEnvio}/>
-                            <input type="text" name="nombreEnvio" id="nombreEnvio" placeholder="nombreEnvio" className="form-control" defaultValue={i.nombreEnvio}/>
-                            <input type="text" name="ciudadEnvio" id="ciudadEnvio" placeholder="ciudadEnvio" className="form-control" defaultValue={i.ciudadEnvio}/>
-                            <input type="text" name="TelefonoEnvio" id="TelefonoEnvio" placeholder="TelefonoEnvio" className="form-control" defaultValue={i.TelefonoEnvio}/>
-                            <input type="text" name="direccionEnvio" id="direccionEnvio" placeholder="direccionEnvio" className="form-control" defaultValue={i.direccionEnvio}/>
-                            <input type="text" name="segmento" id="segmento" placeholder="segmento" className="form-control" defaultValue={i.segmento}/>
-                            <input type="text" name="esCliente" id="esCliente" placeholder="esCliente" className="form-control" defaultValue={i.esCliente}/>
-                        </div>
-                        )
-                        : <h1>cargando</h1>
-                    }
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </form>
+                   <div className="form-group">
+                        <label htmlFor="">Empresa:</label>
+                        <input type="text" name="empresa" id="empresa" placeholder="Empresa" className="form-control" defaultValue={cliente.empresa}/>
+                   </div>
+                   <div className="form-group">
+                        <label htmlFor="">Nit:</label>
+                        <input type="text" name="nit" id="nit" placeholder="nit" className="form-control" defaultValue={cliente.nit}/>
+                   </div>
+                   <div className="form-group">
+                        <label htmlFor="">Direccion</label>
+                        <input type="text" name="direccion" id="direccion" placeholder="direccion" className="form-control" defaultValue={cliente.direccion}/>
+                   </div>
+                   <div className="form-group">
+                        <label htmlFor="">Ciudad</label>
+                        <input type="text" name="ciudad" id="ciudad" placeholder="ciudad" className="form-control" defaultValue={cliente.ciudad}/>
+                   </div>
+                   <div className="form-group">
+                        <label htmlFor="">Correo</label>
+                        <input type="text" name="correo" id="correo" placeholder="correo" className="form-control" defaultValue={cliente.correo}/>
+                   </div>
+                   <div className="form-group">
+                        <label htmlFor="">Segmento</label>
+                        <input type="text" name="segmento" id="segmento" placeholder="segmento" className="form-control" defaultValue={cliente.segmento}/>
+                   </div>
+                   <div className="form-group">
+                        <label htmlFor="">EsCliente</label>
+                        <input type="text" name="esCliente" id="esCliente" placeholder="esCliente" className="form-control" defaultValue={cliente.esCliente}/>
+                   </div>
+                    <button type="submit" className="btn btn-primary">Guardar</button>
+               </div>
+               <div className="col-md-6">
+                   <div className="form-group">
+                        <label htmlFor="">Contacto:</label>
+                        <input type="text" name="contacto" id="contacto" placeholder="contacto" className="form-control" defaultValue={cliente.contacto}/>
+                   </div>
+                   <div className="form-group">
+                    <label htmlFor="">Celular</label>
+                    <input type="text" name="celular" id="celular" placeholder="celular" className="form-control" defaultValue={cliente.celular}/>
+                   </div>
+                   <div className="form-group">
+                   <label htmlFor="">Telefono:</label>
+                    <input type="text" name="telefono" id="telefono" placeholder="telefono" className="form-control" defaultValue={cliente.telefono}/>
+                   </div>
                </div>
            </div>
+                </form>
         </div>
     )
 }
