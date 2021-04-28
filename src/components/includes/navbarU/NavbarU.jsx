@@ -32,14 +32,14 @@ const NavbarU = () => {
                         <p>Cotizaciones</p>
                     </div>
                 </Link>
-                 <Link to="/ventas/ver">
+                 {/* <Link to="/ventas/ver">
                     <div className="botonLi mb-4" style={{background:"var(--verdeFondo)"}}>
                         <div className="icono">
                             <i className="fas fa-user"></i>
                         </div>
                         <p>Ventas</p>
                     </div>
-                </Link>
+                </Link> */}
                  <Link to="/clientes/ver">
                     <div className="botonLi mb-4" style={{background:"var(--moradoFondo)"}}>
                         <div className="icono">

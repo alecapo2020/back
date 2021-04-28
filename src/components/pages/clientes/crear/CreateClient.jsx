@@ -15,7 +15,10 @@ const CreateClient = () => {
       history.replace('/login')
     }
 
-    const urlApi = "http://127.0.0.1:8000/api/clientes";
+
+
+    const urlApi = `${process.env.REACT_APP_SERVIDOR}/api/clientes`
+    
 
     const [formData, setFormData] = useState({
         imagen:'/a.webp',
@@ -53,7 +56,13 @@ const CreateClient = () => {
     }
 
     const pushClient = (formData)=>{
-        axios.post(urlApi+'/post', { formData })
+        axios.post(urlApi,formData,{
+            headers:{
+                token:'JaRvIs92!',
+                correo:'alecapo@gmail.com',
+                password:'123456'
+                    }
+        })
       .then(res => {
         alert('guardado',res);
         console.log(res.data);

@@ -55,7 +55,7 @@ const Navbar = () => {
                   <li><Link className="nav-link active" onClick={()=>{ordenesUl()}} to="#">ORDENES <i className="fas fa-bars ms-5"></i> </Link> </li>  
                   <ul id="ordenesUl"></ul>
                 
-                  <li><Link className="nav-link active" to="/">VENTAS ONLINE</Link> </li>
+                  {/* <li><Link className="nav-link active" to="/">VENTAS ONLINE</Link> </li> */}
 
                   <li><Link className="nav-link active" to="/productos">PRODUCTOS</Link> </li>
                 </ul>

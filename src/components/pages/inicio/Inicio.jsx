@@ -152,24 +152,24 @@ const Inicio = () => {
                     <h3 className="titulo"><i className="far fa-check-square me-2"></i> Productos</h3>
                     <div className="row">
                         <div className="col-6 justify-content-center d-flex">
-                            <a href="/productos/ver">
+                            <Link to="/productos/ver">
                                 <div className="boton">
                                     <div className="iconoBox d-flex justify-content-center align-content-center" style={{background:"var(--fucsiaFondo)"}}>
                                         <i className="fas fa-search"></i>
                                     </div>
                                     <h3 className="textoBoton">Ver</h3>
                                 </div>
-                            </a>    
+                            </Link>    
                         </div>
                         <div className="col-6 justify-content-center d-flex">
-                            <a href="/productos/crear">
+                            <Link to="/productos/crear">
                                 <div className="boton">
                                     <div className="iconoBox d-flex justify-content-center align-content-center" style={{background:"var(--fucsiaFondo)"}}>
                                         <i className="fas fa-pen"></i>
                                     </div>
                                     <h3 className="textoBoton">Crear</h3>
                                 </div>
-                            </a>    
+                            </Link>    
                         </div>
                     </div>
                 </div>

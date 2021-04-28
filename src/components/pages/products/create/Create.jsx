@@ -6,10 +6,10 @@ const Create = () => {
 
     const history = useHistory();
     const [data, SetData] = useContext(Store)
-    
+    console.log(data)
     if(localStorage.getItem('logged') === 'false' || data.logged !== true){
       console.log('error de autenticacion')
-      history.replace('/login')
+    //   history.replace('/login')
     }
     
     const [productos, setProductos] = useState([])
@@ -71,10 +71,12 @@ const Create = () => {
 
             <table className="table bg-white">
                 <thead>
-                    <th>Cantidad</th>
-                    <th>producto</th>
-                    <th>precio</th>
-                    <th>subtotal</th>
+                    <tr>
+                        <th>Cantidad</th>
+                        <th>producto</th>
+                        <th>precio</th>
+                        <th>subtotal</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {
