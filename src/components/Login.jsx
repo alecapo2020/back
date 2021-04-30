@@ -1,14 +1,12 @@
 import axios from 'axios';
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
-import { Store } from "../store/store";
 import Cookies from 'universal-cookie';
 
 
 const Login = () => {
     const cookies = new Cookies();
     const history = useHistory();
-    const [data, SetData] = useContext(Store)
     const [form, setForm] = useState([])
     
     const formHandler = (e) => {
@@ -33,11 +31,8 @@ const Login = () => {
             if((tokenAuth === 9)){
                 
                 localStorage.setItem('logged',true)
-                SetData({logged:true,})
                 cookies.set('token', '3d33c77f6aba01680fce7ec86557886856f6e75392fc3d7e79566fd0980b6c03', { path: '/' });
                 history.replace('/inicio')
-                console.log('autenticado')
-
             }else{
                 return console.log("Error de autenticacion")
             }

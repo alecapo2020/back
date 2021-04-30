@@ -1,12 +1,23 @@
 import React from 'react'
 import './style.css'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
+import Cookies from 'universal-cookie';
 
 const FooterBlack = () => {
 
+    const cookies = new Cookies();
+    const history = useHistory();
+    
     const date = new Date()
     const fecha = date.getDate()+'/'+date.getMonth() +'/'+ date.getFullYear() 
+    const logoutHandler = () => {
+        cookies.remove('token')
+        localStorage.clear()
 
+        console.log('Sesion Cerrada')
+        history.replace('/login')
+    }
+    
     return (
         <div className="footer pb-5">
             <div className="row">
@@ -24,7 +35,7 @@ const FooterBlack = () => {
                     <p className="p-0 m-0">{fecha}</p>
                 </div>
                 <div className="col-lg-1 col-md-1 col-sm-2 col-1 d-flex flex-row align-items-center">
-                   <Link to="/logut"> <i className="fas fa-power-off ms-3" style={{color:'red'}}></i></Link>
+                   <Link to="/logut"> <i className="fas fa-power-off ms-3"  onClick={logoutHandler} style={{color:'red'}}></i></Link>
                 </div>
             </div>
         </div>
