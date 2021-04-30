@@ -2,16 +2,13 @@ import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { useHistory } from 'react-router-dom'
-import { Store } from '../../../../store/store'
-
+import Cookies from 'universal-cookie';
 
 const Editar = () => {
 
     const history = useHistory();
-    const [data, SetData] = useContext(Store)
-    
-
-    if(localStorage.getItem('logged') === 'false' || data.logged !== true){
+    const cookies = new Cookies();
+    if(localStorage.getItem('logged') !== 'true' || cookies.get('token') !== '3d33c77f6aba01680fce7ec86557886856f6e75392fc3d7e79566fd0980b6c03'){
       console.log('error de autenticacion')
       history.replace('/login')
     }

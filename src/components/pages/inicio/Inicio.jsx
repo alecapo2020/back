@@ -2,13 +2,14 @@ import React, { useContext } from 'react';
 import './style.css';
 import {Link, useHistory} from 'react-router-dom';
 import { Store } from '../../../store/store'
+import Cookies from 'universal-cookie';
+
 
 const Inicio = () => {
 
     const history = useHistory();
-    const [data, SetData] = useContext(Store)
-    
-    if(localStorage.getItem('logged') === 'false' || data.logged !== true){
+    const cookies = new Cookies();
+    if(localStorage.getItem('logged') !== 'true' || cookies.get('logged') !== 'true'){
       console.log('error de autenticacion')
       history.replace('/login')
     }
