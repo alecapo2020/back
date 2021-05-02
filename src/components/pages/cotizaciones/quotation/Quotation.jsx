@@ -1,14 +1,10 @@
-import React,{useState, useEffect, useContext} from 'react'
-import ClientField from './ClientField'
-import ProductField from './ProductField'
+import React,{useState, useEffect } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import Cookies from 'universal-cookie';
 
 const Quotation = () => {
     const date = new Date().toLocaleDateString();
-   
-    const [totalInputs, setTotalInputs] = useState(0)
     const [cotizacion, setCotizacion] = useState({
         noCotizacion:'',
         ClienteId:'',
@@ -24,20 +20,12 @@ const Quotation = () => {
         iva:'',
         total:'',
     })
-    const [cliente, setCliente] = useState([])
-    const [status, setStatus] = useState(false);
+   
     const [cotiCount, setCotiCount] = useState(0)
-    const [subtotalProductos, setSubtotalProductos] = useState(0)
-
-    const [products, setProducts] = useState([])
-    const [totals, setTotals] = useState({
-        subtotal:0,
-        iva:0,
-        envio:0,
-        total:0
-    })
-    const [productList, setProductList] = useState([])
-    
+    const [cliente, setCliente] = useState([])
+    const [productos, setProductos] = useState([])
+    const [prod, setProd] = useState([]) // Guarda momentaneamente valores de producto
+    const [subtotalf, setSubtotalf] = useState(0)
 
     const history = useHistory();
     const cookies = new Cookies();
@@ -45,26 +33,12 @@ const Quotation = () => {
       console.log('error de autenticacion')
       history.replace('/login')
     }
-    
 
-  const calcEnvio =()=>{
-    const subtotal = subtotalProductos;
-    // iva
-    const selectorIva = document.getElementById('iva')
-    const iva = subtotal * 0.19
-    selectorIva.value = iva
-    
-    // total
-    const selectorTotal = document.getElementById('Total')
-    const total = subtotal + iva
-    selectorTotal.value = total
-    
-    setCotizacion({...cotizacion,iva:iva,total:total,subtotal:subtotal, productos:products})
-  }
+   
 
   const guardarPost = (data)=>{
-      cotizacion.productos = JSON.stringify(cotizacion.productos)
-      console.log(cotizacion)
+    
+    console.log(cotizacion)
     const url = `${process.env.REACT_APP_SERVIDOR}/api/cotizaciones`;
     axios.post(url, cotizacion,{
         headers:{
@@ -78,45 +52,86 @@ const Quotation = () => {
   }
 
   const cotiHandler = (e)=>{
-        setCotizacion({...cotizacion, [e.target.name]:e.target.value,ClienteId:cliente})
+        const envio = document.getElementById('envio').value 
+        const iva = document.getElementById('iva').value 
+        const total = document.getElementById('total').value 
+        const observaciones = document.getElementById('observacionesCoti').value
+        setCotizacion({...cotizacion, [e.target.name]:e.target.value,productos:JSON.stringify(prod),observacionesCoti:observaciones, subtotal:subtotalf, iva:iva,total:total,envio:envio})
     }
 
-  function getNoCoti(){
-    const url = `${process.env.REACT_APP_SERVIDOR}/api/cotizaciones`;
+  const getCotizaciones = async () => {
+    const url = `${process.env.REACT_APP_SERVIDOR}/api/cotizaciones?limit=10&offset=0`;
     
-    axios.get(url,{
+    await axios.get(url,{
         headers:{
             token:'JaRvIs92!',
             correo:'alecapo@gmail.com',
             password:'123456'
         }
     })
-    .then((data)=>{
-        setCotizacion({...cotizacion, noCotizacion:data.data.cotizaciones.length+1})
-    })
-    
-    .catch(e=>console.log(e))
+    .then((e)=>{
+        setCotiCount(e.data.count+1)
+        setCotizacion({...cotizacion, noCotizacion:e.data.count+1})
+    }).catch(e=>console.log(e))
+
+    await axios.get(`${process.env.REACT_APP_SERVIDOR}/api/clientes/?limit=10&offset=0`,{
+        headers:{
+            token:'JaRvIs92!',
+            correo:'alecapo@gmail.com',
+            password:'123456'
+        }
+    }).then(e=>setCliente(e.data.clientes)).catch(e=>console.log(e))
+
+    await axios.get(`${process.env.REACT_APP_SERVIDOR}/api/productos?limit=100&offset=0`,{
+        headers:{
+            token:'JaRvIs92!',
+            correo:'alecapo@gmail.com',
+            password:'123456'
+        }
+    }).then(e=>setProductos(e.data.productos)).catch(e=>console.log(e))
     }
 
+    const searchHandler = (e) => {
+        axios.get(`${process.env.REACT_APP_SERVIDOR}/api/clientes/?limit=10&offset=0&search=${e.target.value}`,{
+            headers:{
+                token:'JaRvIs92!',
+                correo:'alecapo@gmail.com',
+                password:'123456'
+            }
+        }).then(e=>setCliente(e.data.clientes)).catch(e=>console.log(e))
+    }
 
+    const selectHandler = (id, empresa) => {
+        document.getElementById('empresa').value = empresa
+        setCotizacion({...cotizacion, empresa:empresa, ClienteId:id}) 
+    }
 
+    const prodHandler = (e) => {
+        const subtotal = document.getElementById('cantidad').value * e.target.value
+        document.getElementById('subtotal').value = subtotal
+    }
+
+    const addHandler = () => {
+        const cantidad = document.getElementById('cantidad').value
+        const producto = document.getElementById('producto').value
+        const vUnitario = document.getElementById('vUnitario').value
+        const subtotalt = document.getElementById('subtotal').value
+        
+        setProd([...prod,{cantidad:cantidad, producto:producto, vUnitario:vUnitario, subtotal:subtotalt}])
+        setSubtotalf(parseInt(subtotalt)+parseInt(subtotalf))
+    }
+    console.log(cotizacion)
+
+//   console.log(cotizacion)
 
   useEffect(() => {    
-        getNoCoti();
+        getCotizaciones();
        
   }, [])
-
- 
-console.log(cotizacion)
-// console.log(totals)
-    
+  
     return (
         <>
-        {
-            status===false ? 
-        
-
-          <div className="container py-5 quotation">
+        <div className="container py-5 quotation">
                 <section>
                     <div className="row">
                         <div className="col-md-6">
@@ -128,9 +143,12 @@ console.log(cotizacion)
                     </div>
                     <div className="row my-5">
                         <div className="col-md-6 clientData">
-                            <h3>Datos del Cliente</h3>
+                            
                             <h4>Empresa:</h4>
-                            <ClientField cliente={setCliente}/>
+                            
+                            <input type="text" name="empresa" id="empresa"/>
+                            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Buscar</button>
+                            
                             <h4 className="mt-3">Nombre del Vendedor:</h4>
                             <select name="vendedor" id="vendedor" className="" onChange={cotiHandler}>
                                 <option>Seleccione</option>
@@ -146,7 +164,7 @@ console.log(cotizacion)
                                         <tbody className="text-end">
                                             <tr>
                                                 <td>No. Cotizacion:</td>
-                                                <td><input type="text" className="dateInput" id="noCotizacion" name="noCotizacion" value={cotizacion.noCotizacion} readOnly/></td>
+                                                <td><input type="text" className="dateInput" id="noCotizacion" name="noCotizacion" value={cotiCount} readOnly/></td>
                                             </tr>
                                             <tr>
                                                 <td>Fecha:</td>
@@ -165,7 +183,35 @@ console.log(cotizacion)
                     </div>
                 </section>
                 <section>
-                    <ProductField subtotal={setSubtotalProductos} products={setProducts} totals={setTotals} />
+                  <table className="table bg-white">
+                      <thead>
+                          <tr>
+                              <th>Cantidad</th>
+                              <th>Producto</th>
+                              <th>Precio</th>
+                              <th>Subtotal</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td><input type="text" name="cantidad" id="cantidad" className="form-control"/></td>
+                              <td>
+                                  <select name="producto" id="producto" onChange={prodHandler}>
+                                      <option>- Seleccione -</option>
+                                      {
+                                          productos.map((i)=>
+                                            <option value={i.subCategoria.nombre+ ' - ' + i.color}>{i.subCategoria.nombre+ ' - ' + i.color}</option>
+                                          )
+                                      }
+                                  </select>
+                              </td>
+                              <td><input type="text" name="vUnitario" id="vUnitario" className="form-control" onChange={prodHandler}/></td>
+                              <td><input type="text" name="subtotal" id="subtotal" className="form-control" onChange={prodHandler}/></td>
+                              
+                              <td><i className="fas fa-plus text-dark" onClick={addHandler} ></i></td>
+                          </tr>
+                      </tbody>
+                  </table>
                 </section>
                 <section className="py-5">
                     <div className="row">
@@ -204,24 +250,58 @@ console.log(cotizacion)
                                         <p>Total:</p>
                                     </div>
                                     <div className="col-md-6">
-                                        <p><input type="text" name="" id="subtotalF" value={subtotalProductos}/></p>
-                                        <p><input type="text" name="envio" id="envio" defaultValue="0" onBlur={calcEnvio}/></p>
-                                        <p><input type="text" name="iva" id="iva" defaultValue="0"/></p>
-                                        <p><input type="text" name="total" id="Total" defaultValue="0"/></p>
+                                        <p><input type="text" name="subtotalF" id="subtotalF" value={subtotalf}/></p>
+                                        <p><input type="text" name="envio" id="envio" defaultValue="0"/></p>
+                                        <p><input type="text" name="iva" id="iva" value={subtotalf * 0.19}/></p>
+                                        <p><input type="text" name="total" id="total" value={subtotalf+subtotalf * 0.19}/></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
+                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-xl">
+                        <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Selecciona Cliente</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                        <div className="col-md-6 mx-auto">
+                            <input type="text" name="search" id="search" placeholder="buscar" className="form-control" onChange={searchHandler}/>
+                        </div>
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Empresa</th>
+                                    <th>Telefono</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    cliente.map(i=>
+                                    <tr key={i.id}>
+                                        <td>{i.id}</td>
+                                        <td>{i.empresa}</td>
+                                        <td>{i.telefono}</td>
+                                        <td><i className="far fa-hand-point-left" data-bs-dismiss="modal" aria-label="Close" onClick={()=>selectHandler(i.id, i.empresa)}></i></td>
+                                    </tr>    
+                                    )
+                                }
+                            </tbody>
+                        </table>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary">Save changes</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
           </div>
-        
-        :
-        <div className="container py-5">
-        <h3>Guardado Correctamente</h3>
-        <button className="btn btn-success">Ver Cotizaciones</button>
-        </div>
-        }
         </>
     )
 }

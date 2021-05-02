@@ -1,30 +1,30 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import {useHistory, useParams} from 'react-router-dom'
 import axios from 'axios';
 import './style.css'
-import { Store } from '../../../../store/store';
+import Cookies from 'universal-cookie';
 
 const EnvioPDF = () => {
-
-  // const history = useHistory();
-  //   const [data, SetData] = useContext(Store)
-    
-  //   if(localStorage.getItem('logged') === 'false' || data.logged !== true){
-  //     console.log('error de autenticacion')
-  //     history.replace('/login')
-  //   }
-
-  const [cliente, setCliente] = useState([])
-  const urlParam = useParams()
+  const {idCliente} = useParams();
+  const history = useHistory();
+  const cookies = new Cookies();
   const componentRef = useRef();
+
+  if(localStorage.getItem('logged') !== 'true' || cookies.get('token') !== '3d33c77f6aba01680fce7ec86557886856f6e75392fc3d7e79566fd0980b6c03'){
+    console.log('error de autenticacion')
+    history.replace('/login')
+  }
+   
+  const [cliente, setCliente] = useState([])
+
   const handlePrint = useReactToPrint({
     content: () => componentRef.current ,
   });
-
+  
   const getClients = () => {
-    
-    const url = `${process.env.REACT_APP_SERVIDOR}/api/clientes`;  
+    console.log(idCliente)
+    const url = `${process.env.REACT_APP_SERVIDOR}/api/clientes/${idCliente}`;  
     axios.get(url,{
       headers:{
         token:'JaRvIs92!',
@@ -32,11 +32,10 @@ const EnvioPDF = () => {
         password:'123456'
     }
     })
-      .then(e=>{
-        const busqueda = e.data.clientes.filter(i=>i.id === parseInt(urlParam.idCliente))
-        setCliente(busqueda)
+      .then(e=>{ 
+        setCliente(e.data)
         handlePrint()
-        setTimeout(()=> window.location.replace('/clientes/ver'),2500)
+        history.replace('/clientes/ver')
     })
     .catch(e=>console.log(e))
 }
@@ -72,15 +71,15 @@ useEffect(() => {
                 <div className="clientInfo" style={{textAlign: "center", fontSize: "1.3rem"}}>
                     <span style={{fontSize: "1.7rem", fontWeight: "700"}}> DESTINATARIO: </span><br/>
                     {
-                        cliente.map((i,index)=>
-                            <div key={index}>
-                                {i.empresa ?   <span>{i.empresa} <br/></span> : <span></span>}
-                                {i.contacto ?   <span>{i.contacto} <br/></span> : <span></span>}
-                                {i.telefono ?   <span>{i.telefono} <br/></span> : <span></span>}
-                                {i.direccion ?   <span>{i.direccion} <br/></span> : <span></span>}
-                                {i.ciudad ?   <span>{i.ciudad} <br/></span>  : <span></span>}
-                            </div>
-                            )
+                          <div>
+                              <span>{cliente.empresa} <br/></span>
+                              {cliente.contacto ?   <span>{cliente.contacto} <br/></span> : <span></span>}
+                              {cliente.telefono ?   <span>{cliente.telefono} <br/></span> : <span></span>}
+                              {cliente.direccion ?   <span>{cliente.direccion} <br/></span> : <span></span>}
+                              {cliente.ciudad ?   <span>{cliente.ciudad} <br/></span>  : <span></span>}
+                          </div>
+                           
+                            
                     }
                 </div>
             </div>

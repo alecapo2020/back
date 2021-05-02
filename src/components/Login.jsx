@@ -36,9 +36,6 @@ const Login = () => {
             }else{
                 return console.log("Error de autenticacion")
             }
-
-            
-            
             
             console.log(e.data)
         }).catch(e=>console.log('Error de autenticacion'))

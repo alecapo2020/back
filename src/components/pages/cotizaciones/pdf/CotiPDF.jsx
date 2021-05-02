@@ -1,22 +1,21 @@
-import React, { useRef, useEffect,useState, useContext } from 'react';
+import React, { useRef, useEffect,useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import {
-  Redirect,
   useHistory,
   useParams
 } from "react-router-dom";
 import './style.css'
 import axios from 'axios';
-import { Store } from '../../../../store/store';
+import Cookies from 'universal-cookie';
 // import { ComponentToPrint } from './ComponentToPrint';
-
 
 const CotiPDF = () => {
 
+  const url = process.env.REACT_APP_SERVIDOR
   const history = useHistory();
-    const [data, SetData] = useContext(Store)
     
-    if(localStorage.getItem('logged') === 'false' || data.logged !== true){
+    const cookies = new Cookies();
+    if(localStorage.getItem('logged') !== 'true' || cookies.get('token') !== '3d33c77f6aba01680fce7ec86557886856f6e75392fc3d7e79566fd0980b6c03'){
       console.log('error de autenticacion')
       history.replace('/login')
     }
@@ -24,18 +23,18 @@ const CotiPDF = () => {
   const {NoCoti} = useParams();  
   const [cotizacion, setCotizacion] = useState(0)
 
-  
   const getCotizacion = ()=>{
-     axios.get('http://127.0.0.1:8000/api/cotizaciones')
-     .then(res=>{
-       const busquedaCotizacion = (res.data.filter(i=>
-        i.id === parseInt(NoCoti)
-      ))
-      setCotizacion(busquedaCotizacion)
+     axios.get(`${url}/api/cotizaciones/${NoCoti}`, {
+       headers:{
+          token:'JaRvIs92!',
+          correo:'alecapo@gmail.com',
+          password:'123456'
+       }
+     })
+     .then(e => {
+      setCotizacion(e.data[0])
       handlePrint();
-      setTimeout(()=>
-      window.location.href = "http://localhost:3000/cotizaciones/ver",3000
-      )
+      history.replace('/cotizaciones/ver')
     })
   }
 
@@ -50,8 +49,6 @@ const CotiPDF = () => {
     }, [])
 
    
-   
-  
     return (
       <div className="bg-white">
         <div ref={componentRef} >
@@ -62,7 +59,7 @@ const CotiPDF = () => {
           <div className="fila">
             <div className="columna" style={{marginLeft:'70px',fontWeight:'300'}}>
               <p></p>
-              <p>Cotización No. {cotizacion[0].id} </p>
+              <p>Cotización No. {cotizacion.id} </p>
             </div>
             <div className="columna logo">
                 <img src="/img/logo/logo.svg" width="70%" alt="Logo"/>
@@ -71,10 +68,10 @@ const CotiPDF = () => {
         </section>
         
         <section className="seccion2">
-        <p>{cotizacion[0].empresa}</p>
-        <p>{cotizacion[0].contacto}</p>
-        <p>{cotizacion[0].telefono}</p>
-        <p>{cotizacion[0].correo}</p>
+        <p>{cotizacion.Cliente.empresa}</p>
+        <p>{cotizacion.Cliente.contacto}</p>
+        <p>{cotizacion.Cliente.telefono}</p>
+        <p>{cotizacion.Cliente.correo}</p>
         </section>
 
         <section className="seccion3">
@@ -91,12 +88,12 @@ const CotiPDF = () => {
                 
               {
                 
-                JSON.parse(cotizacion[0].productos).map((i,index)=>
+                JSON.parse(cotizacion.productos).map((i,index)=>
                     <tr key={index}>
-                      <td>{i.cantidad}</td>
+                      <td>{parseInt(i.cantidad).toLocaleString()}</td>
                       <td>{i.producto}</td>
-                      <td>${i.precio}</td>
-                      <td>${i.subtotal.toLocaleString()}</td>
+                      <td>${parseInt(i.vUnitario)}</td>
+                      <td>${parseInt(i.subtotal).toLocaleString()}</td>
                     </tr>
                   )
               }
@@ -112,10 +109,10 @@ const CotiPDF = () => {
         <section className="seccion4">
           <div className="fila">
             <div className="columna" style={{marginLeft:'70px'}}>
-              <p style={{margin:'5px'}}><span style={{fontWeight:'500',color:'#707070'}}>Tiempo de Entrega:</span><span style={{fontWeight:'300',color:'#707070'}}> {cotizacion[0].tiempo_entrega}</span></p>
-              <p style={{margin:'5px'}}><span style={{fontWeight:'500',color:'#707070'}}>Forma de Pago: </span><span style={{fontWeight:'300',color:'#707070'}}>{cotizacion[0].forma_pago}</span></p>
+              <p style={{margin:'5px'}}><span style={{fontWeight:'500',color:'#707070'}}>Tiempo de Entrega:</span><span style={{fontWeight:'300',color:'#707070'}}> {cotizacion.tiempo_entrega}</span></p>
+              <p style={{margin:'5px'}}><span style={{fontWeight:'500',color:'#707070'}}>Forma de Pago: </span><span style={{fontWeight:'300',color:'#707070'}}>{cotizacion.forma_pago}</span></p>
               <p style={{margin:'5px'}}><span style={{fontWeight:'500',color:'#707070'}}>Observaciones Adicionales:</span></p>
-              <p style={{margin:'5px'}}><span style={{fontWeight:'300',color:'#707070'}}> {cotizacion[0].observacionesCoti}</span></p>
+              <p style={{margin:'5px'}}><span style={{fontWeight:'300',color:'#707070'}}> {cotizacion.observacionesCoti}</span></p>
             </div>
            
             <div className="columna info">
@@ -123,19 +120,19 @@ const CotiPDF = () => {
                 <tbody>
                   <tr>
                     <td style={{fontWeight:'300',textAlign:'right',color:'#707070', paddingBottom:'10px'}}>Subtotal:</td>
-                    <td style={{fontWeight:'300',color:'#707070', paddingBottom:'10px'}}>${cotizacion[0].subtotal.toLocaleString()}</td>
+                    <td style={{fontWeight:'300',color:'#707070', paddingBottom:'10px'}}>${parseInt(cotizacion.subtotal).toLocaleString()}</td>
                   </tr>
                   <tr>
                     <td style={{fontWeight:'300',textAlign:'right',color:'#707070', paddingBottom:'10px'}}>Iva:</td>
-                    <td style={{fontWeight:'300',color:'#707070', paddingBottom:'10px'}}>${cotizacion[0].iva.toLocaleString()}</td>
+                    <td style={{fontWeight:'300',color:'#707070', paddingBottom:'10px'}}>${parseInt(cotizacion.iva).toLocaleString()}</td>
                   </tr>
                   <tr>
                     <td style={{fontWeight:'300',textAlign:'right',color:'#707070', paddingBottom:'10px'}}>Envio:</td>
-                    <td style={{fontWeight:'300',color:'#707070', paddingBottom:'10px'}}>${cotizacion[0].envio}</td>
+                    <td style={{fontWeight:'300',color:'#707070', paddingBottom:'10px'}}>${parseInt(cotizacion.envio).toLocaleString()}</td>
                   </tr>
                   <tr>
                     <td style={{fontWeight:'300',textAlign:'right',color:'#707070', paddingBottom:'10px'}}>Total:</td>
-                    <td style={{fontWeight:'300',color:'#707070', paddingBottom:'10px'}}>${cotizacion[0].total.toLocaleString()}</td>
+                    <td style={{fontWeight:'300',color:'#707070', paddingBottom:'10px'}}>${parseInt(cotizacion.total).toLocaleString()}</td>
                   </tr>
                 </tbody>
               </table>

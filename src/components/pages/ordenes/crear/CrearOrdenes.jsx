@@ -46,7 +46,6 @@ const CrearOrdenes = () => {
         const suma = parseInt(form.subtotal)+parseInt(tot)
         const ivaV = suma*0.19
         const totalOrden = suma + ivaV
-        console.log(form.subtotal)
         setForm({...form,productos:[...form.productos,total],subtotal:suma,iva:ivaV,total:totalOrden})
     }
 
@@ -88,7 +87,6 @@ const CrearOrdenes = () => {
             },
         })
         .then(e=>{
-            console.log(e.data.productos)
             setProducts(e.data.productos)
         })
         .catch(e=>console.log(e))
@@ -96,7 +94,7 @@ const CrearOrdenes = () => {
     }
 
     const getClientes = () => {
-        const url = `${process.env.REACT_APP_SERVIDOR}/api/clientes`;
+        const url = `${process.env.REACT_APP_SERVIDOR}/api/clientes?limit=10&offset=1`;
         axios.get(url,{
             headers:{
                 token:'JaRvIs92!',
@@ -108,18 +106,24 @@ const CrearOrdenes = () => {
         .catch(e=>console.log(e))
     }
 
-    const clienteHandler = (e) =>{
+    const searchHandler = (e) =>{
         const searchValue = (e.target.value)
-        
-        const busquedaA = clientes.filter((i)=>
-            i.empresa === searchValue
-            )
+        const url = `${process.env.REACT_APP_SERVIDOR}/api/clientes?limit=10&offset=1&search=${searchValue}`;
+        axios.get(url,{
+            headers:{
+                token:'JaRvIs92!',
+                correo:'alecapo@gmail.com',
+                password:'123456'
+            }
+        })
+        .then(e=>setClientes(e.data.clientes))
+        .catch(e=>console.log(e))
+    }
 
-        busquedaA.length > 0 ? 
-        setBusqueda(busquedaA)
-        : console.log('no data')
-        console.log(busquedaA)
-        
+    const selectHandler = (id,empresa) => {
+        setForm({...form,ClienteId:id})
+        document.getElementById('Empresa').value = empresa
+
     }
 
     const sinIvaHandler = () => {
@@ -135,7 +139,6 @@ const CrearOrdenes = () => {
         const value = parseInt(e.target.value)
         const total = parseInt(document.getElementById('subtotal').value)
         const iva = parseInt(document.getElementById('iva').value)
-        console.log(total)
         setForm({...form, envio:value, total:total+value+iva})
     }
 
@@ -144,38 +147,11 @@ const CrearOrdenes = () => {
         getClientes()
     }, [])
 
-    console.log(form)
+    // console.log(form)
 
     return (
         <div className="container py-5">
-            <div className="clienteTabla">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Nombre</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                        busqueda !== [] 
-                        ?
-                        busqueda.map((i,index)=>
-                            <tr key={index} onClick={()=>setForm({...form,ClienteId:i.id})}>
-                                <td>{i.id}</td>
-                                <td>{i.empresa}</td>
-                            </tr>
-                           
-                        )
-                        :
-                        <tr>
-                            <td>Buscando</td>
-                        </tr>
-                        }
-                       
-                    </tbody>
-                </table>
-            </div>
+            
             <div className="save">
                 <i className="far fa-save d-flex align-items-center" onClick={save}></i>
             </div>
@@ -199,9 +175,9 @@ const CrearOrdenes = () => {
                 <div className="row mt-5">
                     <div className="col-md-6">  
                         <div className="form-group">
-                          <label htmlFor="">Nombre del Cliente</label>
-                          <input type="text"
-                            className="form-control" name="ClienteId" id="ClienteId" aria-describedby="helpId" placeholder="" onChange={clienteHandler}/>
+                            <label htmlFor="Cliente">Cliente:</label>
+                          <button className="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccion Cliente</button>
+                            <input type="text" name="Empresa" id="Empresa" className="form-control" readOnly/>
                         </div>
                     </div>
                     <div className="col-md-6">
@@ -219,7 +195,7 @@ const CrearOrdenes = () => {
                     <div className="col-md-5">
                         <div className="form-group">
                           <label htmlFor="producto">Productos</label>
-                          <select className="form-control" name="producto" id="producto" onChange={formHandler} value={form.producto}>
+                          <select className="form-control" name="producto" id="producto" onChange={formHandler} defaultValue={form.producto}>
                             {
                                 products ?
                                 products.map(i=>
@@ -319,6 +295,48 @@ const CrearOrdenes = () => {
                     </div>
                 </div>
             </div>
+
+            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-xl">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel">Seleccionar Cliente</h5>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div className="modal-body">
+                        <div className="col-md-6 mx-auto">
+                            <input type="text" name="search" id="search" placeholder="buscar" className="form-control" onChange={searchHandler}/>
+                        </div>
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Empresa</th>
+                                    <th>Telefono</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    clientes.map(i=>
+                                        <tr key={i.id}>
+                                            <td>{i.id}</td>
+                                            <td>{i.empresa}</td>
+                                            <td>{i.telefono}</td>
+                                            <td><i className="far fa-hand-point-left" data-bs-dismiss="modal" aria-label="Close" onClick={()=>selectHandler(i.id, i.empresa)}></i></td>
+                                        </tr>    
+                                    )
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" className="btn btn-primary">Save changes</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
         </div>
     )
 }
