@@ -21,6 +21,7 @@ import EnvioPDF from "../components/pages/clientes/envioPDF/EnvioPDF";
 import Create from "../components/pages/products/create/Create";
 import Editar from "../components/pages/clientes/editar/Editar";
 import Ventas from "../components/pages/ventas/Ventas";
+import Inventario from "../components/pages/inventario/Inventario";
 import Login from "../components/Login";
 import { Store } from "../store/store";
 
@@ -79,6 +80,9 @@ export const  AppRouter = () => {
                     </Route>
                     <Route exact path="/ventas">
                         <NavbarU/><Ventas/><FooterBlack/>
+                    </Route>
+                    <Route exact path="/inventario">
+                        <NavbarU/><Inventario/><FooterBlack/>
                     </Route>
                     
                     <Route exact path="/inicio">

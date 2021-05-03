@@ -22,24 +22,17 @@ const CreateClient = () => {
         imagen:'/a.webp',
         empresa:'',
         nit:'',
-        dv:'',
         telefono:'',
         ciudad:'',
         direccion:'',
+        departamento:'',
         contacto:'',
-        cargo:'',
         celular:'',
         correo:'',
-        correoFactura:'',
-        regimen:'',
-        responsabilidad:'',
-        datosEnvio:'',
-        nombreEnvio:'',
-        ciudadEnvio:'',
-        telefonoEnvio:'',
-        direccionEnvio:'',
         segmento:'',
         esCliente:'',
+        genero:'',
+        medioContacto:'',
     })
    
 
@@ -80,13 +73,34 @@ const CreateClient = () => {
                                 <input type="text" name="empresa" id="empresa" placeholder="Nombre de la Empresa" className="form-control mt-4" value={formData.empresa} onChange={handleChangeInput} />
                                 <input type="text" name="contacto" id="contacto" placeholder="Contacto" className="form-control mt-4" value={formData.contacto} onChange={handleChangeInput}/>
                                 <input type="text" name="direccion" id="direccion" placeholder="Direccion" className="form-control mt-4" value={formData.direccion} onChange={handleChangeInput}/>
+                                <input type="text" name="departamento" id="departamento" placeholder="departamento" className="form-control mt-4" value={formData.departamento} onChange={handleChangeInput}/>
                                 <input type="text" name="celular" id="celular" placeholder="Celular" className="form-control mt-4" value={formData.celular} onChange={handleChangeInput}/>
+                                <select name="medioContacto" id="medioContacto" className="sele mt-4" onChange={handleChangeInput}>
+                                    <option value="Seleccione">- Medio Contacto -</option>
+                                    <option value="Referido">Referido</option>
+                                    <option value="Google">Google</option>
+                                    <option value="Telefono">Telefono</option>
+                                    <option value="Instagram">Instagram</option>
+                                    <option value="Pagina Web">Página Web</option>
+                                    <option value="Pagina Web">Cliente Antiguo </option>
+                                    <option value="Pagina Web">Otro</option>
+                                </select>
                             </div>
                             <div className="col-md-6">
                                 <input type="text" name="nit" id="nit" placeholder="Nit" className="form-control mt-4" value={formData.nit} onChange={handleChangeInput}/>
                                 <input type="text" name="telefono" id="telefono" placeholder="Telefono" className="form-control mt-4" value={formData.telefono} onChange={handleChangeInput}/>
                                 <input type="text" name="ciudad" id="ciudad" placeholder="Ciudad" className="form-control mt-4" value={formData.ciudad} onChange={handleChangeInput}/>
                                 <input type="text" name="correo" id="correo" placeholder="Correo" className="form-control mt-4" value={formData.correo} onChange={handleChangeInput}/>
+                                <select name="genero" id="genero" className="sele mt-4" onChange={handleChangeInput}>
+                                    <option>- Género -</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Femenino">Femenino</option>
+                                </select>
+                                <select name="esCliente" id="esCliente" className="sele mt-3"   onChange={handleChangeInput}>
+                                    <option>Es Cliente?</option>
+                                    <option value="si">Si</option>
+                                    <option value="no">No</option>
+                                </select>
                             </div>
                         </div>
                         
@@ -104,11 +118,7 @@ const CreateClient = () => {
                             <option value="Empresa">Empresa</option>
                             <option value="Otro">Otro</option>
                         </select>
-                        <select name="esCliente" id="esCliente" className="sele mt-3"   onChange={handleChangeInput}>
-                            <option>Es Cliente?</option>
-                            <option value="si">Si</option>
-                            <option value="no">No</option>
-                        </select>
+                       
                         <button type="submit" className="btn btn-success mt-4">GUARDAR</button>
                     </div>
                 </div>
