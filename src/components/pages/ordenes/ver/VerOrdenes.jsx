@@ -50,57 +50,59 @@ const VerOrdenes = () => {
             <div className="col-6 mx-auto mb-4">
                 <input type="text" name="search" id="search" onChange={searchHandler} placeholder="Ingrese valor a buscar" className="form-control"/>
             </div>
-            <table className="table bg-dark table-light table-striped">
-                <thead>
-                    <tr>
-                        <th>No Orden</th>
-                        <th>Fecha</th>
-                        <th>Empresa</th>
-                        <th>Productos</th>
-                        
-                        <th>Iva</th>
-                        <th>Envio</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        data.map((orden,index)=>
-                            <tr key={index}>
-                                <td>{orden.id}</td>
-                                <td>{orden.fecha}</td>
-                                <td>{orden.Cliente.empresa}</td>
-                                <td>
-                                    <div className="table-responsive">
+            <div className="table-responsive">
+                <table className="table bg-dark table-light table-striped">
+                    <thead>
+                        <tr>
+                            <th>No Orden</th>
+                            <th>Fecha</th>
+                            <th>Empresa</th>
+                            <th>Productos</th>
+                            
+                            <th>Iva</th>
+                            <th>Envio</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            data.map((orden,index)=>
+                                <tr key={index}>
+                                    <td>{orden.id}</td>
+                                    <td>{orden.fecha}</td>
+                                    <td>{orden.Cliente.empresa}</td>
+                                    <td>
+                                        <div className="table-responsive">
 
-                                    
-                                        <table key={index} className="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>producto</th>
-                                                    <th>cantidad</th>
-                                                    <th>Price</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {JSON.parse(orden.productos).map((i,index)=>
-                                                            <tr key={index}>
-                                                                <td>{i.product}</td>
-                                                                <td>{parseInt(i.quantity).toLocaleString()}</td>
-                                                                <td>{i.price}</td>
-                                                            </tr>
-                                                )}
-                                            </tbody>
-                                     </table>
-                                   </div>
-                                </td>
-                                <td>${parseInt(orden.iva).toLocaleString()}</td>
-                                <td>${parseInt(orden.envio).toLocaleString()}</td>
-                                <td>${parseInt(orden.total).toLocaleString()}</td>
-                            </tr>
-                        )}
-                </tbody>
-            </table>
+                                        
+                                            <table key={index} className="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>producto</th>
+                                                        <th>cantidad</th>
+                                                        <th>Price</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {JSON.parse(orden.productos).map((i,index)=>
+                                                                <tr key={index}>
+                                                                    <td>{i.product}</td>
+                                                                    <td>{parseInt(i.quantity).toLocaleString()}</td>
+                                                                    <td>{i.price}</td>
+                                                                </tr>
+                                                    )}
+                                                </tbody>
+                                        </table>
+                                    </div>
+                                    </td>
+                                    <td>${parseInt(orden.iva).toLocaleString()}</td>
+                                    <td>${parseInt(orden.envio).toLocaleString()}</td>
+                                    <td>${parseInt(orden.total).toLocaleString()}</td>
+                                </tr>
+                            )}
+                    </tbody>
+                </table>
+            </div>
             <div className="row row-cols-auto float-end mb-5">
                 <button className="btn btn-primary me-3" onClick={()=>{setOffset(offset-5)}}>Anterior</button>   
                     <h5 className="text-white">{offset}</h5>                            

@@ -45,7 +45,7 @@ const Login = () => {
     return (
         <div>
             <div className="contenedor">
-                <div className="col-3 mx-auto text-white" style={{marginTop:'20%'}}>
+                <div className="col-md-3 mx-auto text-white" style={{marginTop:'20%'}}>
                     <form action="" onSubmit={loginHandler}>
                         <div className="form-group">
                             <label htmlFor="correo">Correo</label>

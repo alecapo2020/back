@@ -22,7 +22,7 @@ const Inicio = () => {
                 <div className="caja" style={{background: 'var(--amarilloFondo)'}}>
                     <h3 className="titulo"><i className="far fa-check-square me-2"></i> Ordenes</h3>
                     <div className="row">
-                        <div className="col-6 justify-content-center d-flex">
+                        <div className="col-md-6 mt-3 justify-content-center d-flex">
                             <Link to="/ordenes/ver">
                                 <div className="boton">
                                     <div className="iconoBox d-flex justify-content-center align-content-center" style={{background: 'var(--amarilloFondo)'}}>
@@ -32,7 +32,7 @@ const Inicio = () => {
                                 </div>
                             </Link>    
                         </div>
-                        <div className="col-6 justify-content-center d-flex">
+                        <div className="col-md-6 mt-3 justify-content-center d-flex">
                             <Link to="/ordenes/crear">
                                 <div className="boton">
                                     <div className="iconoBox d-flex justify-content-center align-content-center" style={{background: 'var(--amarilloFondo)'}}>
@@ -49,7 +49,7 @@ const Inicio = () => {
                 <div className="caja" style={{background:"var(--AzulFondo)"}}>
                     <h3 className="titulo"><i className="fas fa-file-invoice me-2"></i> Cotizaciones</h3>
                     <div className="row">
-                        <div className="col-4 justify-content-center d-flex">
+                        <div className="col-md-4 mt-3 justify-content-center d-flex">
                             <Link to="/cotizaciones/ver">
                                 <div className="boton">
                                     <div className="iconoBox d-flex justify-content-center align-content-center" style={{background:"var(--AzulFondo)"}}>
@@ -59,7 +59,7 @@ const Inicio = () => {
                                 </div>
                             </Link>    
                         </div>
-                        <div className="col-4 justify-content-center d-flex">
+                        <div className="col-md-4 mt-3 justify-content-center d-flex">
                             <Link to="/cotizaciones/crear">
                                 <div className="boton">
                                     <div className="iconoBox d-flex justify-content-center align-content-center" style={{background:"var(--AzulFondo)"}}>
@@ -69,7 +69,7 @@ const Inicio = () => {
                                 </div>
                             </Link>    
                         </div>
-                        <div className="col-4 justify-content-center d-flex">
+                        <div className="col-md-4 mt-3 justify-content-center d-flex">
                             <Link to="/cotizaciones/solicitudes">
                                 <div className="boton">
                                     <div className="iconoBox d-flex justify-content-center align-content-center" style={{background:"var(--AzulFondo)"}}>
@@ -88,7 +88,7 @@ const Inicio = () => {
                 <div className="caja" style={{background:"var(--moradoFondo)"}}>
                     <h3 className="titulo"><i className="far fa-check-square me-2"></i> Clientes</h3>
                     <div className="row" >
-                        <div className="col-6 justify-content-center d-flex" >
+                        <div className="col-md-6 mt-3 justify-content-center d-flex" >
                             <Link to="/clientes/ver">
                                 <div className="boton">
                                     <div className="iconoBox d-flex justify-content-center align-content-center" style={{background:"var(--moradoFondo)"}}>
@@ -98,7 +98,7 @@ const Inicio = () => {
                                 </div>
                             </Link>    
                         </div>
-                        <div className="col-6 justify-content-center d-flex">
+                        <div className="col-md-6 mt-3 justify-content-center d-flex">
                             <Link to="/clientes/crear">
                                 <div className="boton">
                                     <div className="iconoBox d-flex justify-content-center align-content-center" style={{background:"var(--moradoFondo)"}}>
@@ -130,10 +130,10 @@ const Inicio = () => {
             </div>
             <div className="col-lg-2 col-md-6 col-sm-10 col-12">
                 <div className="caja" style={{background:"var(--rojoFondo)"}}>
-                    <h3 className="titulo"><i className="fas fa-file-invoice me-2"></i> Informes</h3>
+                    <h3 className="titulo"><i className="fas fa-file-invoice me-2"></i> Inventario</h3>
                     <div className="row">
                         <div className="col-12 justify-content-center d-flex">
-                            <Link to="/infomes">
+                            <Link to="/inventario">
                                 <div className="boton">
                                     <div className="iconoBox d-flex justify-content-center align-content-center" style={{background:"var(--rojoFondo)"}}>
                                         <i className="fas fa-search"></i>
@@ -146,12 +146,12 @@ const Inicio = () => {
                 </div>
             </div>
         </div>
-        <div className="row justify-content-center">
+        <div className="row justify-content-center mb-5">
             <div className="col-lg-4 col-md-6 col-sm-10 col-12">
                 <div className="caja" style={{background:"var(--fucsiaFondo)"}}>
                     <h3 className="titulo"><i className="far fa-check-square me-2"></i> Productos</h3>
                     <div className="row">
-                        <div className="col-6 justify-content-center d-flex">
+                        <div className="col-md-6 mt-3 justify-content-center d-flex">
                             <Link to="/productos/ver">
                                 <div className="boton">
                                     <div className="iconoBox d-flex justify-content-center align-content-center" style={{background:"var(--fucsiaFondo)"}}>
@@ -161,7 +161,7 @@ const Inicio = () => {
                                 </div>
                             </Link>    
                         </div>
-                        <div className="col-6 justify-content-center d-flex">
+                        <div className="col-md-6 mt-3 justify-content-center d-flex">
                             <Link to="/productos/crear">
                                 <div className="boton">
                                     <div className="iconoBox d-flex justify-content-center align-content-center" style={{background:"var(--fucsiaFondo)"}}>

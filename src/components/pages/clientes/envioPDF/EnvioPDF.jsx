@@ -35,7 +35,7 @@ const EnvioPDF = () => {
       .then(e=>{ 
         setCliente(e.data)
         handlePrint()
-        history.replace('/clientes/ver')
+        // history.replace('/clientes/ver')
     })
     .catch(e=>console.log(e))
 }

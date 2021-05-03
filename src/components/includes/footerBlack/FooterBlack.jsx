@@ -23,8 +23,6 @@ const FooterBlack = () => {
             <div className="row">
                 <div className="col-lg-2 col-md-2 col-sm-2 col-3 d-flex align-items-center justify-content-center">
                     <Link to="/inicio"><i className="fas fa-home ms-3"></i></Link>
-                    <Link to="/mail"><i className="fas fa-envelope ms-3"></i></Link>
-                    <Link to="/inicio"><i className="fas fa-bell ms-3"></i></Link>
                 </div>
                 <div className="col-lg-3 col-md-4 col-sm-5 col-5 d-flex align-items-center">
                     <p className="p-0 m-0">Usuario: Alejandro Cabrejo </p>

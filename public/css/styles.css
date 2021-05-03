@@ -17,6 +17,11 @@ body{
     margin-left: 380px !important; 
 }
 
+@media (max-width: 300px) {
+    .container {
+        margin-left: 0px !important; 
+    }
+}
     
 /* menu */
 
