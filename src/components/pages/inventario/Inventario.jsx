@@ -109,7 +109,7 @@ const Inventario = () => {
                                 inventario.map(i=>
                                     <tr>
                                         <td><img src={'/img/productos/'+i.Producto.imagen} alt="" width="150px"/></td>
-                                        <td>{i.Producto.color}</td>
+                                        <td>{i.Producto.subCategoriaId + ' - ' + i.Producto.color  }</td>
                                         <td>{i.totalCreditos}</td>
                                         <td>{i.totalDebitos}</td>
                                         <td>{i.totalCreditos - i.totalDebitos < 0 ? <span className="text-danger">{i.totalCreditos - i.totalDebitos} </span> : <span className="text-success">{i.totalCreditos - i.totalDebitos} </span>}</td>
