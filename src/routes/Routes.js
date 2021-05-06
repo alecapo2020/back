@@ -20,6 +20,8 @@ import CrearOrdenes from "../components/pages/ordenes/crear/CrearOrdenes";
 import EnvioPDF from "../components/pages/clientes/envioPDF/EnvioPDF";
 import Create from "../components/pages/products/create/Create";
 import Editar from "../components/pages/clientes/editar/Editar";
+import OportunidadesCrear from "../components/pages/oportunidades/OportunidadesCrear";
+import Oportunidades from "../components/pages/oportunidades/Oportunidades";
 import Ventas from "../components/pages/ventas/Ventas";
 import Inventario from "../components/pages/inventario/Inventario";
 import Login from "../components/Login";
@@ -85,6 +87,15 @@ export const  AppRouter = () => {
                         <NavbarU/><Inventario/><FooterBlack/>
                     </Route>
                     
+                    <Route exact path="/oportunidades/crear">
+                        <OportunidadesCrear/> <FooterBlack/>
+                    </Route>
+                    <Route exact path="/oportunidades">
+                        <Oportunidades/> <FooterBlack/>
+                    </Route>
+                    <Route exact path="/oportunidades/:id">
+                        <Oportunidades/> <FooterBlack/>
+                    </Route>
                     <Route exact path="/inicio">
                         <Inicio/><FooterBlack/>
                     </Route>

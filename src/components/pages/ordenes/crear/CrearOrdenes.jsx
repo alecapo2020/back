@@ -16,7 +16,7 @@ const CrearOrdenes = () => {
     const mes = parseInt(new Date().getMonth()) + 1;
 
     const [form, setForm] = useState({
-        fecha:new Date().getDate()+'/'+mes+'/'+new Date().getFullYear(),
+        fecha:new Date().getFullYear()+'/'+mes+'/'+new Date().getDate(),
         ClienteId:'',
         vendidoPor:'',
         formaDePago:'',
