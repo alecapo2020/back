@@ -14,7 +14,7 @@ const Oportunidades = () => {
     
     
     const getOportunidades = () => {
-        axios.get('http://localhost:3001/api/oportunidades',{
+        axios.get('http://www.manillasapi.com/api/oportunidades',{
             headers:{
                 token:'JaRvIs92!',
                 correo:'alecapo@gmail.com',
@@ -25,7 +25,7 @@ const Oportunidades = () => {
 
     const verOportunidad = (id) => {
         
-        axios.get(`http://localhost:3001/api/oportunidades/${id}`,{
+        axios.get(`http://www.manillasapi.com/api/oportunidades/${id}`,{
             headers:{
                 token:'JaRvIs92!',
                 correo:'alecapo@gmail.com',

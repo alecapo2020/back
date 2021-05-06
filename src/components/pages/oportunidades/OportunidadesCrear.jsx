@@ -37,7 +37,7 @@ const OportunidadesCrear = () => {
         e.preventDefault()
         console.log('envio')
 
-        axios.post(`http://localhost:3001/api/oportunidades`,form,{
+        axios.post(`http://www.manillasapi.com/api/oportunidades`,form,{
             headers:{
                 token:'JaRvIs92!',
                 correo:'alecapo@gmail.com',
