@@ -75,8 +75,9 @@ useEffect(() => {
                               <span>{cliente.empresa} <br/></span>
                               {cliente.contacto ?   <span>{cliente.contacto} <br/></span> : <span></span>}
                               {cliente.telefono ?   <span>{cliente.telefono} <br/></span> : <span></span>}
+                              {cliente.celular ?   <span>{cliente.celular} <br/></span> : <span></span>}
                               {cliente.direccion ?   <span>{cliente.direccion} <br/></span> : <span></span>}
-                              {cliente.ciudad ?   <span>{cliente.ciudad} <br/></span>  : <span></span>}
+                              {cliente.ciudad ?   <span>{cliente.ciudad} - {cliente.departamento} <br/></span>  : <span></span>}
                           </div>
                            
                             

@@ -7,6 +7,7 @@ const OportunidadesCrear = () => {
     const history = useHistory();
     const date = new Date ();
     const mes = date.getMonth() + 1
+    console.log(date.getMonth())
     const today = date.getFullYear() + '/' + mes + '/' + date.getDate() 
     
 
