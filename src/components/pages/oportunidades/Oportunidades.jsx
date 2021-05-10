@@ -80,50 +80,27 @@ const Oportunidades = () => {
                 <div className="modal-dialog modal-xl">
                     <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 className="modal-title" id="exampleModalLabel">Oportunidad</h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
-                        <div className="row">
-                            <div className="col-md-6">
-                                <div className="form-control">
-                                    <label htmlFor="id">Empresa</label>
-                                    <input type="text" name="ClienteId" id="ClienteId" defaultValue={opp.ClienteId}/>
-                                </div>
-                                <div className="form-control">
-                                    <label htmlFor="id">etapa</label>
-                                    <input type="text" name="etapa" id="etapa" defaultValue={opp.etapa}/>
-                                </div>
-                              
-                                <div className="form-control">
-                                    <label htmlFor="id">comentarios</label>
-                                    <input type="text" name="comentarios" id="comentarios" defaultValue={opp.comentarios}/>
-                                </div>
-                                <div className="form-control">
-                                    <label htmlFor="id">razonPerdida</label>
-                                    <input type="text" name="razonPerdida" id="razonPerdida" defaultValue={opp.razonPerdida}/>
-                                </div>
-                                
-                            </div>
-                            <div className="col-md-6">
-                                <div className="form-control">
-                                    <label htmlFor="id">fechaCierre</label>
-                                    <input type="text" name="fechaCierre" id="fechaCierre" defaultValue={opp.fechaCierre}/>
-                                </div>
-                                <div className="form-control">
-                                    <label htmlFor="id">importe</label>
-                                    <input type="text" name="importe" id="importe" defaultValue={opp.importe}/>
-                                </div>
-                                <div className="form-control">
-                                    <label htmlFor="id">pasoSiguiente</label>
-                                    <input type="text" name="pasoSiguiente" id="pasoSiguiente" defaultValue={opp.pasoSiguiente}/>
-                                </div>
-                                <div className="form-control">
-                                    <label htmlFor="id">origenCandidato</label>
-                                    <input type="text" name="origenCandidato" id="origenCandidato" defaultValue={opp.origenCandidato}/>
-                                </div>
-                            </div>
-                        </div>
+                       <div>
+                            <h3 className="my-4">Empresa: { opp.ClienteId } </h3>
+                           <div className="row">
+                               <div className="col-md-6">
+                                   <p><strong>Etapa: </strong> { opp.etapa } </p>
+                                   <p><strong>Paso Siguiente:</strong> { opp.pasoSiguiente }</p>
+                                   <p><strong>Comentarios: </strong></p>
+                                   <textarea className="form-control" name="" id="" cols="30" rows="5" defaultValue={ opp.comentarios }></textarea>
+                               </div>
+                               <div className="col-md-6">
+                                   <p><strong>Fecha: </strong>{ opp.fechaCierre}</p>
+                                   <p><strong>Importe: </strong>{ opp.importe}</p>
+                                   <p><strong>Origen Candidato:</strong> { opp.origenCandidato }</p>
+                                   <strong>Razon Perdida: </strong> { opp.razonPerdida === 'Vigente' ? <p style={{color:'white', background:'green', textAlign:'center', fontSize:'1.5rem'}}>{ opp.razonPerdida } </p> : <p style={{color:'white', background:'green', textAlign:'center', fontSize:'1.5rem'}}> { opp.razonPerdida } </p> }
+                               </div>
+                           </div>
+                       </div>
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -133,6 +110,7 @@ const Oportunidades = () => {
                 </div>
             </div>
         </div>
+        
     )
 }
 

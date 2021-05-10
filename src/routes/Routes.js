@@ -20,6 +20,7 @@ import CrearOrdenes from "../components/pages/ordenes/crear/CrearOrdenes";
 import EnvioPDF from "../components/pages/clientes/envioPDF/EnvioPDF";
 import Create from "../components/pages/products/create/Create";
 import Editar from "../components/pages/clientes/editar/Editar";
+import OportunidadesClientes from "../components/pages/oportunidades/OportunidadesClientes";
 import OportunidadesCrear from "../components/pages/oportunidades/OportunidadesCrear";
 import Oportunidades from "../components/pages/oportunidades/Oportunidades";
 import Ventas from "../components/pages/ventas/Ventas";
@@ -93,8 +94,11 @@ export const  AppRouter = () => {
                     <Route exact path="/oportunidades">
                         <Oportunidades/> <FooterBlack/>
                     </Route>
-                    <Route exact path="/oportunidades/:id">
+                    <Route exact path="/oportunidades">
                         <Oportunidades/> <FooterBlack/>
+                    </Route>
+                    <Route exact path="/oportunidades/clientes">
+                        <OportunidadesClientes/> <FooterBlack/>
                     </Route>
                     <Route exact path="/inicio">
                         <Inicio/><FooterBlack/>

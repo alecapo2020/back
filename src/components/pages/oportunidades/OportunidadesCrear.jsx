@@ -55,7 +55,7 @@ const OportunidadesCrear = () => {
                 <div className="col-7 mx-auto bg-white  p-5 mb-5">
                 <h1>Crear Oportunidad</h1>
                 <a href="/oportunidades"><button className="btn btn-primary mb-4">Ver Oportunidades</button></a>
-                <a href="/clientes/crear"><button className="btn btn-success mb-4 ms-3">Crear Cliente</button></a>
+                <a href="/oportunidades/clientes"><button className="btn btn-success mb-4 ms-3">Ver Clientes</button></a>
                     <form action="" onSubmit={submitHandler} method="POST">
                         <div className="row">
                             <div className="col-md-6">
@@ -113,6 +113,7 @@ const OportunidadesCrear = () => {
                                    <label htmlFor='origenCandidato'>Origen Cliente</label>
                                    <select name="origenCandidato" id="origenCandidato" className="form-control" onChange={formHandler}>
                                        <option>Seleccione</option>
+                                       <option value="Base de Datos Propia">Llamada Entrante</option>
                                        <option value="Base de Datos Propia">Base de Datos Propia</option>
                                        <option value="Google">Google</option>
                                        <option value="Referido">Referido</option>
