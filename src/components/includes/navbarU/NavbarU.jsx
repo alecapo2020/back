@@ -16,7 +16,7 @@ const NavbarU = () => {
             </div>
             
             <div className="botones d-flex justify-content-center flex-column p-5">
-                <Link to="/ordenes/ver">
+                <Link to="/ordenes/crear">
                     <div className="botonLi mb-4" style={{background:"var(--amarilloFondo)"}}>
                         <div className="icono">
                             <i className="fas fa-user"></i>
@@ -24,7 +24,7 @@ const NavbarU = () => {
                         <p>Ordenes</p>
                     </div>
                 </Link>
-                 <Link to="/cotizaciones/ver">
+                 <Link to="/cotizaciones/crear">
                     <div className="botonLi mb-4" style={{background:"var(--AzulFondo)"}}>
                         <div className="icono">
                             <i className="fas fa-user"></i>

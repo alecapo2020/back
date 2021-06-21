@@ -28,9 +28,10 @@ const CrearOrdenes = () => {
     })
 
 
+
+
     const [products, setProducts] = useState()
     const [clientes, setClientes] = useState([])
-    const [busqueda, setBusqueda] = useState([])
 
     const formHandler = (e) => {
         setForm({...form, [e.target.name]: e.target.value})
@@ -78,7 +79,7 @@ const CrearOrdenes = () => {
     }
 
     const getProducts = () =>{
-        const url = `${process.env.REACT_APP_SERVIDOR}/api/productos`
+        const url = `${process.env.REACT_APP_SERVIDOR}/api/productos?limit=100&offset=0`
         axios.get(url,{
             headers:{
                 token:'JaRvIs92!',
@@ -86,9 +87,9 @@ const CrearOrdenes = () => {
                 password:'123456'
             },
         })
-        .then(e=>{
+        .then(e=>
             setProducts(e.data.productos)
-        })
+        )
         .catch(e=>console.log(e))
         
     }
@@ -243,7 +244,7 @@ const CrearOrdenes = () => {
                            form.productos.map((i,index)=>
                             <tr key={index}>
                                 <td>{i.product}</td>
-                                <td>${i.quantity.toLocaleString()}</td>
+                                <td>{i.quantity.toLocaleString()}</td>
                                 <td>${i.price.toLocaleString()}</td>
                                 <td>${i.subt.toLocaleString()}</td>
                             </tr>

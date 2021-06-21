@@ -33,8 +33,8 @@ const CotiPDF = () => {
      })
      .then(e => {
       setCotizacion(e.data[0])
-      handlePrint();
-      history.replace('/cotizaciones/ver')
+      // handlePrint();
+      // history.replace('/cotizaciones/ver')
     })
   }
 
@@ -87,6 +87,9 @@ const CotiPDF = () => {
               <tbody>
                 
               {
+                console.log((cotizacion.productos))
+              }
+              {/* {
                 
                 JSON.parse(cotizacion.productos).map((i,index)=>
                     <tr key={index}>
@@ -96,7 +99,7 @@ const CotiPDF = () => {
                       <td>${parseInt(i.subtotal).toLocaleString()}</td>
                     </tr>
                   )
-              }
+              } */}
                 
                       
                 
