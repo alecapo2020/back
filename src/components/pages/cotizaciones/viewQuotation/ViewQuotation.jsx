@@ -49,6 +49,11 @@ const ViewQuotation = () => {
         .catch(e=>console.log(e))
     }
 
+    const editar = (id) => {
+        console.log(id)
+        history.replace('/cotizaciones/editar/'+id)
+    }
+
     function searchInput (e){
         const searchValue = e.target.value
         axios.get(REACT_APP_SERVIDOR+`/api/cotizaciones?limit=10&offset=0&search=${searchValue}`,{
@@ -71,13 +76,13 @@ const ViewQuotation = () => {
 
     return (
         <div className="container py-5">
-            <h1>VER COTIZACIONES</h1>
+            <h1 className="text-white">VER COTIZACIONES</h1>
             <div className="bgSearchSection p-3 d-flex justify-content-center">
                 <input className="searchInput" type="text" name="searchInput" id="searchInput" placeholder="Ingresa valor a buscar.." onChange={(e)=>searchInput(e)}/>
                 <button className="btnSearchField">Buscar</button>
             </div>
 
-            <div className="tableBg">
+            <div className="tableBg table-responsive">
                 <table className="tabla" id="tabla">
                     <thead>
                         <tr>
@@ -99,6 +104,7 @@ const ViewQuotation = () => {
                                    <td>{ i.Cliente.telefono }</td>
                                    <td>{ i.Cliente.celular }</td>
                                    <td>{ i.Cliente.correo }</td>
+                                   <td><i className="fas fa-pen" style={{color:'Gold', fontSize:'20px'}} onClick={()=>{editar(i.id)}}></i></td>
                                    <td><a href={`/cotizaciones/pdf/${i.id}`}> <i className="fas fa-search" style={{color:'green', fontSize:'20px'}}></i></a></td>
                                    <td><i className="fas fa-trash-alt" style={{color:'red', fontSize:'20px'}} onClick={()=>{borrar(i.id)}}></i></td>
                                    

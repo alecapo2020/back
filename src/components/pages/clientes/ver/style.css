@@ -11,6 +11,13 @@
     border-radius: 15px;
 }
 
+@media (min-width:300px){
+    .searchInput{
+        width: 100%;
+    }
+}
+
+
 .btnSearchField{
     background: #FFC107;
     border:none;

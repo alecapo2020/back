@@ -68,7 +68,7 @@ const Clients = () => {
                 <input className="searchInput" type="text" name="searchInput" id="searchInput" placeholder="Ingresa valor a buscar.." onChange={searchHandler}/>
             </div>
 
-            <div className="tableBg">
+            <div className="tableBg table-responsive">
                 <table className="tabla" id="tabla">
                     <thead>
                       
@@ -93,8 +93,7 @@ const Clients = () => {
                                       <td><a href={`/clientes/envioPDF/${i.id}`}><i className="far fa-file-pdf" style={{color:"#218838",fontSize:'20px',padding:'7px'}}></i></a></td>
                                       <td><i className="fas fa-trash" onClick={()=>{deleteHandler(i.id)}} style={{color:"#E53129",fontSize:'20px',padding:'7px',cursor:'pointer'}}></i></td>
                                       <td><Link to={`/clientes/editar/${i.id}`}><i className="fas fa-pen" style={{color:"#F5C244",fontSize:'20px',padding:'7px',cursor:'pointer'}}></i></Link></td>
-                              
-                              
+
                               </tr>
                                 
                             

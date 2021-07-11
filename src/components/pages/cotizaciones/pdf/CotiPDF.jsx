@@ -33,8 +33,8 @@ const CotiPDF = () => {
      })
      .then(e => {
       setCotizacion(e.data[0])
-      // handlePrint();
-      // history.replace('/cotizaciones/ver')
+      handlePrint();
+      history.replace('/cotizaciones/ver')
     })
   }
 
@@ -60,6 +60,7 @@ const CotiPDF = () => {
             <div className="columna" style={{marginLeft:'70px',fontWeight:'300'}}>
               <p></p>
               <p>Cotización No. {cotizacion.id} </p>
+              <p>Fecha: {cotizacion.fecha}</p>
             </div>
             <div className="columna logo">
                 <img src="/img/logo/logo.svg" width="70%" alt="Logo"/>
@@ -86,10 +87,10 @@ const CotiPDF = () => {
               </thead>
               <tbody>
                 
-              {
-                console.log((cotizacion.productos))
-              }
               {/* {
+                console.log((cotizacion.productos))
+              } */}
+              {
                 
                 JSON.parse(cotizacion.productos).map((i,index)=>
                     <tr key={index}>
@@ -99,7 +100,7 @@ const CotiPDF = () => {
                       <td>${parseInt(i.subtotal).toLocaleString()}</td>
                     </tr>
                   )
-              } */}
+              }
                 
                       
                 

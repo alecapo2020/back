@@ -14,13 +14,22 @@ body{
 
 
 .container{
-    margin-left: 380px !important; 
+    margin-left: 20% !important; 
 }
+
+
 
 @media (max-width: 300px) {
     .container {
-        margin-left: 0px !important; 
+        margin-left: 0% !important; 
     }
+    .nav{
+        display: none !important;
+    }
+}
+
+.fas {
+    cursor: pointer;
 }
     
 /* menu */

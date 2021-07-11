@@ -27,6 +27,8 @@ import Ventas from "../components/pages/ventas/Ventas";
 import Inventario from "../components/pages/inventario/Inventario";
 import Login from "../components/Login";
 import { Store } from "../store/store";
+import Quotation2 from "../components/pages/cotizaciones2/Quotation2";
+import EditarCotizacion from "../components/pages/cotizaciones/editar/EditarCotizacion";
 
 
 export const  AppRouter = () => {
@@ -42,7 +44,7 @@ export const  AppRouter = () => {
                 <Switch>
                     <Route exact path="/cotizaciones/crear">
                         <NavbarU/>
-                        <Quotation/>
+                        <Quotation2/>
                         <FooterBlack/>
                     </Route>
                     <Route exact path="/login">
@@ -56,6 +58,9 @@ export const  AppRouter = () => {
                     </Route>
                     <Route exact path="/cotizaciones/pdf/:NoCoti">
                         <CotiPDF/><FooterBlack/>
+                    </Route>
+                    <Route exact path="/cotizaciones/editar/:NoCoti">
+                        <NavbarU/><EditarCotizacion/><FooterBlack/>
                     </Route>
                     <Route exact path="/clientes/ver">
                         <NavbarU/><Clients/><FooterBlack/>
