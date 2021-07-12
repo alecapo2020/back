@@ -25,6 +25,7 @@ const CrearOrdenes = () => {
         iva:'',
         envio:'0',
         total:'',
+        observaciones:'',
     })
 
 
@@ -63,7 +64,7 @@ const CrearOrdenes = () => {
             })
         .then(e=>console.log(e))
         .catch(e=>console.log(e))
-        
+        console.log(form)
         setForm({
             fecha:'',
             ClienteId:'',
@@ -74,8 +75,10 @@ const CrearOrdenes = () => {
             iva:'',
             envio:'',
             total:'',
+            observaciones:'',
         })
-        alert('enviando..')
+        alert('Guardado Correctamente')
+        history.replace('/ordenes/ver')
     }
 
     const getProducts = () =>{
@@ -95,7 +98,7 @@ const CrearOrdenes = () => {
     }
 
     const getClientes = () => {
-        const url = `${process.env.REACT_APP_SERVIDOR}/api/clientes?limit=10&offset=1`;
+        const url = `${process.env.REACT_APP_SERVIDOR}/api/clientes?limit=10&offset=0`;
         axios.get(url,{
             headers:{
                 token:'JaRvIs92!',
@@ -266,6 +269,10 @@ const CrearOrdenes = () => {
                             <option value="Davivienda">Davivienda</option>
                             <option value="PayU">PayU</option>
                           </select>
+                        </div>
+                        <div className="form-group my-4">
+                            <label htmlFor="observaciones">Observaciones</label>
+                            <textarea name="observaciones" id="observaciones" cols="30" rows="10" className="form-control" onChange={formHandler} defaultValue={form.observaciones}></textarea>
                         </div>
                         <button className="btn btn-primary" onClick={sinIvaHandler}>Sin Iva</button>
                     </div>
