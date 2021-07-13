@@ -32,13 +32,18 @@ const VerOrdenes = () => {
     }
 
     const searchHandler = (e) => {
-        axios.get(`${url}/api/ordenes?limit=5&offset=1&search=${e.target.value}`,{
+        axios.get(`${url}/api/ordenes?limit=5&offset=0&search=${e.target.value}`,{
             headers:{
                 token:'JaRvIs92!',
                 correo:'alecapo@gmail.com',
                 password:'123456'
             }
         }).then(e=>{setData(e.data.ordenes)}).catch(e=>console.log(e))
+    }
+
+    const crearRecibo = (id) => {
+
+        history.replace(`/ordenes/ver/${id}`)
     }
 
     useEffect(() => {
@@ -62,6 +67,7 @@ const VerOrdenes = () => {
                             <th>Iva</th>
                             <th>Envio</th>
                             <th>Total</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -98,7 +104,9 @@ const VerOrdenes = () => {
                                     <td>${parseInt(orden.iva).toLocaleString()}</td>
                                     <td>${parseInt(orden.envio).toLocaleString()}</td>
                                     <td>${parseInt(orden.total).toLocaleString()}</td>
+                                    <td><i className="fa fa-search" onClick={()=>crearRecibo(orden.id)}></i></td>
                                 </tr>
+                                
                             )}
                     </tbody>
                 </table>

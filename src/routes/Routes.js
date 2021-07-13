@@ -29,6 +29,7 @@ import Login from "../components/Login";
 import { Store } from "../store/store";
 import Quotation2 from "../components/pages/cotizaciones2/Quotation2";
 import EditarCotizacion from "../components/pages/cotizaciones/editar/EditarCotizacion";
+import OrdenPdf from "../components/pages/ordenes/ordenPdf/OrdenPdf";
 
 
 export const  AppRouter = () => {
@@ -82,6 +83,9 @@ export const  AppRouter = () => {
                     </Route>
                     <Route exact path="/ordenes/ver">
                         <NavbarU/><VerOrdenes/><FooterBlack/>
+                    </Route>
+                    <Route exact path="/ordenes/ver/:id">
+                        <NavbarU/><OrdenPdf/><FooterBlack/>
                     </Route>
                     <Route exact path="/ordenes/crear">
                         <NavbarU/><CrearOrdenes/><FooterBlack/>

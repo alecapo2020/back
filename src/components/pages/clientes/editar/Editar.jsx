@@ -40,6 +40,7 @@ const Editar = () => {
             telefono:  form.elements['telefono'].value,
             direccion: form.elements['direccion'].value,
             ciudad:    form.elements['ciudad'].value,
+            departamento:    form.elements['departamento'].value,
             segmento:  form.elements['segmento'].value,
             esCliente: form.elements['esCliente'].value,
         }
@@ -53,7 +54,7 @@ const Editar = () => {
             }
         }).then(e=>{
             alert(e.data.msg)
-            history.replace('/clientes/ver')
+            // history.replace('/clientes/ver')
         })
         .catch(e=>console.log(e))
     }
@@ -85,6 +86,10 @@ const Editar = () => {
                    <div className="form-group">
                         <label htmlFor="">Ciudad</label>
                         <input type="text" name="ciudad" id="ciudad" placeholder="ciudad" className="form-control" defaultValue={cliente.ciudad}/>
+                   </div>
+                   <div className="form-group">
+                        <label htmlFor="">Departamento</label>
+                        <input type="text" name="departamento" id="departamento" placeholder="ciudad" className="form-control" defaultValue={cliente.departamento}/>
                    </div>
                    <div className="form-group">
                         <label htmlFor="">Correo</label>
